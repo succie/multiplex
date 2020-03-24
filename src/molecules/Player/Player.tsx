@@ -20,7 +20,7 @@ const Component: React.FC<Props> = ({ videoId, onMount, ...props }) => {
       width="640"
       height="360"
       frameBorder="0"
-      src={`http://www.youtube.com/embed/${videoId}?enablejsapi=1&origin=${location.origin}`}
+      src={`https://www.youtube.com/embed/${videoId}?enablejsapi=1&origin=${location.origin}`}
       ref={ref}
     ></iframe>
   );
