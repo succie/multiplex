@@ -4,10 +4,12 @@
   "description": "multiplex",
   "private": true,
   "scripts": {
+    "init": "firebase init",
     "start": "webpack-dev-server",
     "build:dev": "NODE_ENV=development webpack",
     "build:prod": "NODE_ENV=production webpack",
-    "storybook": "start-storybook --ci --port 8081"
+    "storybook": "start-storybook --ci --port 8081",
+    "deploy": "firebase deploy"
   },
   "dependencies": {
     "react": "^16.13.0",
@@ -32,6 +34,7 @@
     "babel-loader": "^8.0.6",
     "eslint": "^6.8.0",
     "eslint-plugin-react": "^7.19.0",
+    "firebase-tools": "^7.16.0",
     "html-webpack-plugin": "^3.2.0",
     "prettier": "^1.19.1",
     "typescript": "^3.8.3",
