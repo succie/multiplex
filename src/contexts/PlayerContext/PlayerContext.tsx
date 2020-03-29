@@ -14,7 +14,14 @@ type MountPlayerAction = {
   };
 };
 
-type PlayerActions = AddPlayerAction | MountPlayerAction;
+type RemovePlayerAction = {
+  type: 'RemovePlayer';
+  payload: {
+    id: string;
+  };
+};
+
+type PlayerActions = AddPlayerAction | MountPlayerAction | RemovePlayerAction;
 
 export type PlayerContext = {
   players: { [id: string]: YT.Player | null } | null;
@@ -37,6 +44,10 @@ const reducer = (state: PlayerContext['players'], action: PlayerActions) => {
         ...state,
         [action.payload.id]: new YT.Player(action.payload.id)
       };
+    }
+    case 'RemovePlayer': {
+      delete state?.[action.payload.id];
+      return { ...state };
     }
     default: {
       return state;

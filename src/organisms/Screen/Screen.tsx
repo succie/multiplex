@@ -9,7 +9,9 @@ const Component: React.FC<Props> = ({ ...props }) => {
   return <main {...props}></main>;
 };
 
-const StyledComponent = styled(Component)``;
+const StyledComponent = styled(Component)`
+  display: flex;
+`;
 
 const Container: React.FC = () => {
   const { players, dispatch } = useContext(PlayerContext);
@@ -21,11 +23,18 @@ const Container: React.FC = () => {
     [dispatch]
   );
 
+  const onRemove = useCallback(
+    (id: string) => {
+      dispatch({ type: 'RemovePlayer', payload: { id } });
+    },
+    [dispatch]
+  );
+
   return (
     players && (
       <StyledComponent>
         {Object.keys(players).map(playerId => (
-          <Player videoId={playerId} key={playerId} onMount={onMount} />
+          <Player videoId={playerId} key={playerId} onMount={onMount} onRemove={onRemove} />
         ))}
       </StyledComponent>
     )

@@ -16,6 +16,7 @@ const StyledComponent = styled(Component)`
   background: transparent;
   border: 1px solid #424242;
   border-radius: 4px;
+  color: #ffffff;
   text-transform: uppercase;
   outline: none;
   cursor: pointer;
