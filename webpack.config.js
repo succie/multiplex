@@ -1,35 +1,39 @@
-const path = require("path");
-const HtmlWebpackPlugin = require("html-webpack-plugin");
+const path = require('path');
+const webpack = require('webpack');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
+const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 
-const isProd = process.env.NODE_ENV === "production";
+const isProd = process.env.NODE_ENV === 'production';
 
 module.exports = {
-  mode: isProd ? "production" : "development",
-  entry: path.join(__dirname, "/src/index.tsx"),
+  mode: isProd ? 'production' : 'development',
+  entry: path.join(__dirname, '/src/index.tsx'),
   output: {
-    path: path.join(__dirname, "dist"),
-    filename: "[name].[contenthash].js"
+    path: path.join(__dirname, 'dist'),
+    filename: '[name].[contenthash].js'
   },
   resolve: {
-    extensions: [".js", ".jsx", ".ts", ".tsx"]
+    extensions: ['.js', '.jsx', '.ts', '.tsx']
   },
-  devtool: isProd ? false : "inline-source-map",
+  devtool: isProd ? false : 'inline-source-map',
   devServer: {
     port: 8080,
-    host: "0.0.0.0",
+    host: '0.0.0.0',
     historyApiFallback: true
   },
   module: {
     rules: [
       {
         test: /\.tsx?$/,
-        loader: "babel-loader"
+        loader: 'babel-loader'
       }
     ]
   },
   plugins: [
+    new webpack.ProgressPlugin(),
+    new CleanWebpackPlugin(),
     new HtmlWebpackPlugin({
-      template: path.join(__dirname, "/public/index.html")
+      template: path.join(__dirname, '/public/index.html')
     })
   ]
 };
