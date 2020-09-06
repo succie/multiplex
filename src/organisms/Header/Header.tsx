@@ -22,7 +22,18 @@ const Component: React.FC<Props> = ({ onAdd, onPlayAll, onPauseAll, ...props }) 
   const { register, handleSubmit, reset } = useForm<FormData>();
 
   const onSubmit = useCallback((data: FormData) => {
-    onAdd(data.videoId);
+    let videoId: string = '';
+    if (data.videoId.includes('https://')) {
+      // Extracting IDs in the case of URLs.
+      const id = data.videoId.match(/youtu(?:.*\/v\/|.*v=|\.be\/)([A-Za-z0-9_-]{11})/);
+      if (!id) {
+        throw new Error('Invalid videoId');
+      }
+      videoId = id[1];
+    } else {
+      videoId = data.videoId;
+    }
+    onAdd(videoId);
     reset();
   }, []);
 
