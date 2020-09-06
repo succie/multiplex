@@ -11,6 +11,8 @@ const Component: React.FC<Props> = ({ ...props }) => {
 
 const StyledComponent = styled(Component)`
   display: flex;
+  flex-wrap: wrap;
+  width: 100%;
 `;
 
 const Container: React.FC = () => {
