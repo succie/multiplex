@@ -1,4 +1,5 @@
 import React, { useReducer, createContext, useEffect } from 'react';
+import { produce, Draft } from 'immer';
 
 type AddPlayerAction = {
   type: 'AddPlayer';
@@ -24,39 +25,35 @@ type RemovePlayerAction = {
 type PlayerActions = AddPlayerAction | MountPlayerAction | RemovePlayerAction;
 
 export type PlayerContext = {
-  players: { [id: string]: YT.Player | null } | null;
+  players: { [id: string]: YT.Player | null };
   dispatch: React.Dispatch<PlayerActions>;
 };
 
 export const PlayerContext = createContext<PlayerContext>({} as PlayerContext);
 
-const reducer = (state: PlayerContext['players'], action: PlayerActions) => {
+const reducer = produce((draft: Draft<PlayerContext['players']>, action: PlayerActions) => {
   switch (action.type) {
     case 'AddPlayer': {
-      if (state?.[action.payload.id]) return state;
-      return {
-        ...state,
-        [action.payload.id]: null
-      };
+      if (draft[action.payload.id]) return draft;
+      draft[action.payload.id] = null;
+      return;
     }
     case 'MountPlayer': {
-      return {
-        ...state,
-        [action.payload.id]: new YT.Player(action.payload.id)
-      };
+      draft[action.payload.id] = new YT.Player(action.payload.id);
+      return;
     }
     case 'RemovePlayer': {
-      delete state?.[action.payload.id];
-      return { ...state };
+      delete draft[action.payload.id];
+      return;
     }
     default: {
-      return state;
+      return draft;
     }
   }
-};
+});
 
 export const PlayerContextProvider: React.FC = ({ children }) => {
-  const [players, dispatch] = useReducer(reducer, null);
+  const [players, dispatch] = useReducer(reducer, {} as PlayerContext['players']);
 
   useEffect(() => {
     console.log('players', players);
