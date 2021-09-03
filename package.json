@@ -13,7 +13,7 @@
     "deploy": "firebase deploy"
   },
   "dependencies": {
-    "immer": "^7.0.9",
+    "immer": "^9.0.6",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
     "react-hook-form": "^6.7.2",
